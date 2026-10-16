@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crea Fototessera CIE e Patente | Personalizzabile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-layout">
+    <header class="app-header">
+      <div class="badge-pill">
+        <span class="badge-dot"></span> 100% Privacy • Elaborazione Locale
+      </div>
+      <h1>Crea Fototessera per CIE & Patente</h1>
+      <p>Genera la tua foto a norma ICAO con dimensioni e DPI personalizzabili (Default: 35x45 mm @ 500 DPI).</p>
+    </header>
+
+    <main class="app-content">
+      <!-- Sezione Editor e Caricamento -->
+      <section class="card editor-card">
+        
+        <!-- Dropzone -->
+        <div class="upload-zone" id="uploadBox">
+          <input type="file" id="imageInput" accept="image/jpeg, image/png, image/webp" hidden>
+          <div class="upload-icon-wrapper">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <h2>Trascina qui la tua foto</h2>
+          <p class="upload-subtext">oppure clicca sul pulsante sottostante per selezionarla dal dispositivo</p>
+          <label for="imageInput" class="btn btn-primary btn-upload-pulse">
+            📂 Seleziona Immagine
+          </label>
+          <span class="upload-formats">Formati supportati: JPEG, PNG, WEBP</span>
+        </div>
+
+        <!-- Workspace -->
+        <div class="editor-workspace" id="editorWorkspace" style="display: none;">
+          <div class="workspace-header">
+            <h3>Posiziona il tuo volto</h3>
+            <button id="changeImageBtn" class="btn-text" type="button">🔄 Cambia foto / Annulla</button>
+          </div>
+
+          <!-- Pannello opzionale per personalizzare Dimensioni e DPI -->
+          <div class="settings-panel">
+            <details>
+              <summary>⚙️ Personalizza Dimensioni e Risoluzione (Avanzato)</summary>
+              <div class="settings-grid">
+                <div class="setting-field">
+                  <label for="widthMm">Larghezza (mm):</label>
+                  <input type="number" id="widthMm" value="35" min="10" max="100">
+                </div>
+                <div class="setting-field">
+                  <label for="heightMm">Altezza (mm):</label>
+                  <input type="number" id="heightMm" value="45" min="10" max="100">
+                </div>
+                <div class="setting-field">
+                  <label for="dpiInput">Risoluzione (DPI):</label>
+                  <input type="number" id="dpiInput" value="500" min="72" max="1200">
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div class="canvas-wrapper">
+            <div class="guide-overlay">
+              <div class="guide-ellipse"></div>
+              <div class="guide-line-eyes"></div>
+            </div>
+            <canvas id="editorCanvas"></canvas>
+          </div>
+
+          <div class="editor-toolbar">
+            <div class="zoom-control">
+              <span class="zoom-label">Zoom:</span>
+              <input type="range" id="zoomRange" min="0.1" max="5.0" step="0.02" value="1">
+            </div>
+            <p class="workspace-tip">
+              💡 <strong>Trascina l'immagine</strong> con il mouse o il dito per centrare il viso dentro la guida ovale.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Sezione Download -->
+      <section class="card preview-card" id="previewSection" style="display: none;">
+        <div class="card-title">
+          <h2>Risultato Pronto al Download</h2>
+          <p id="specsLabel">File configurati con i parametri selezionati</p>
+        </div>
+
+        <div class="download-grid">
+          <div class="download-box box-single">
+            <div class="box-badge">Foto Singola</div>
+            <div class="preview-frame">
+              <canvas id="singleCanvas" style="display:none;"></canvas>
+              <img id="singlePreview" alt="Anteprima Foto Singola">
+            </div>
+            <div class="box-info">
+              <h4>Foto Singola Digitale</h4>
+              <p id="singleMetaText">Formato personalizzato con DPI integrati</p>
+            </div>
+            <button id="downloadSingleBtn" class="btn btn-success">
+              ⬇️ Scarica Foto Singola (JPEG)
+            </button>
+          </div>
+
+          <div class="download-box box-sheet">
+            <div class="box-badge badge-alt">Foglio Stampa (10x15)</div>
+            <div class="preview-frame frame-sheet">
+              <canvas id="sheetCanvas" style="display:none;"></canvas>
+              <img id="sheetPreview" alt="Anteprima Foglio Lastricato">
+            </div>
+            <div class="box-info">
+              <h4>Foglio 4 Fototessere</h4>
+              <p>Formato Cartolina 10x15 cm con griglia di taglio</p>
+            </div>
+            <button id="downloadSheetBtn" class="btn btn-accent">
+              ⬇️ Scarica Foglio 4 Foto (10x15)
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
